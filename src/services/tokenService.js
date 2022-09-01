@@ -26,6 +26,9 @@ export default async function getToken(tokenEndpoint, userId, role, roomId) {
         room_id: roomId,
         user_id: userId,
       }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
 
     if (!response.ok) {
