@@ -1,3 +1,11 @@
+# Changes
+
+- set REACT_APP_TOKEN_GENERATION_ENDPOINT  as local one
+- set app token generation endpoint with `/api/token` to return app auth token
+- test
+
+-----
+
 <p align="center" >
   <a href="https://100ms.live/">
   <img src="https://github.com/100mslive/100ms-ios-sdk/blob/main/100ms.gif" height=256/> 

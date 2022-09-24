@@ -33,7 +33,13 @@ const PreviewScreen = React.memo(({ getUserToken }) => {
   const navigate = useNavigation();
   const tokenEndpoint = useTokenEndpoint();
   const [, setIsHeadless] = useSetUiSettings(UI_SETTINGS.isHeadless);
-  const { roomId: urlRoomId, role: userRole } = useParams(); // from the url
+  const {
+    roomId: urlRoomId,
+    role: userRole,
+    userId: userCustomID,
+    planId: planCustomId,
+    day: customDay,
+  } = useParams(); // from the url
   const [token, setToken] = useState(null);
   const [error, setError] = useState({ title: "", body: "" });
   // way to skip preview for automated tests, beam recording and streaming
@@ -50,17 +56,35 @@ const PreviewScreen = React.memo(({ getUserToken }) => {
     useSearchParam(QUERY_PARAM_NAME) || (skipPreview ? "Beam" : "");
   let authToken = useSearchParam(QUERY_PARAM_AUTH_TOKEN);
 
+  console.log(getUserToken, "Get User Token");
+  console.log(authToken, "Get authToken");
+  console.log(useParams(), "Get User Token");
+  console.log(tokenEndpoint, "Get tokenEndpoint");
+  console.log(userCustomID, "Get userCustomID");
+  console.log(urlRoomId, "Get urlRoomId");
+  console.log(userRole, "Get userRole");
+  console.log(planCustomId, "Get planCustomId");
+  console.log(customDay, "GetcustomDay");
+
   useEffect(() => {
     if (authToken) {
       setToken(authToken);
       return;
     }
-    if (!tokenEndpoint || !urlRoomId) {
+    if (!tokenEndpoint) {
       return;
     }
     const getTokenFn = !userRole
       ? () => getUserToken(v4())
-      : () => getToken(tokenEndpoint, v4(), userRole, urlRoomId);
+      : () =>
+          getToken(
+            tokenEndpoint,
+            userCustomID,
+            userRole,
+            urlRoomId,
+            planCustomId,
+            customDay
+          );
     getTokenFn()
       .then(token => {
         setToken(token);
