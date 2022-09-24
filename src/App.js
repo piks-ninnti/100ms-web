@@ -190,6 +190,14 @@ const RouteList = ({ getUserToken, getDetails }) => {
             </Suspense>
           }
         />
+        <Route
+          path=":userId/:planId/:day/:role"
+          element={
+            <Suspense fallback={<FullPageProgress />}>
+              <PreviewScreen getUserToken={getUserToken} />
+            </Suspense>
+          }
+        />
       </Route>
       <Route path="meeting">
         <Route
